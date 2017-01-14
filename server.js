@@ -19,7 +19,7 @@ app.use(express.static("./public"));
 const mongoose = require ("mongoose");
 
 // Database configuration with mongoose
-mongoose.connect("mongodb://localhost/scape");
+mongoose.connect("mongodb://heroku_m21v0lfj:dlfm99aqn2s8utm9clhdjc989h@ds055584.mlab.com:55584/heroku_m21v0lfj");
 const db = mongoose.connection;
 
 // Show any mongoose errors
