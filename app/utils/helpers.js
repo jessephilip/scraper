@@ -10,8 +10,8 @@ var helper = {
   },
 
   // This function posts new searches to our database.
-  saveArticle: function(article) {
-    return axios.post("/save", { location: location });
+  saveArticle: function(savedArticle) {
+    return axios.post("/save", { article: savedArticle });
   }
 };
 
