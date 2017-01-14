@@ -1,48 +1,53 @@
 // Include React
-const React = require("react");
-
-// Helper Function
-const helpers = require("../utils/helpers");
+var React = require("react");
 
 // Here we include all of the sub-components
-const ArticleView = require("./children/articleview.js");
+var Header = require("./children/Header.js");
+var Nav = require("./children/Nav.js");
+var History = require("./children/History");
 
-// This is the main component
-const Main = React.createClass({
+// Helper for making AJAX requests to our API
+var helpers = require("./utils/helpers");
+
+// Creating the Main component
+var Main = React.createClass({
 
     // Here we set a generic state associated with the number of clicks
+    // Note how we added in this history state variable
     getInitialState: function() {
-        return {articles: []};
+        return {history: []};
     },
 
-    componentWillMount: function() {
-
-    },
-
-    //  On load display the number of articles
+    // The moment the page renders get the History
     componentDidMount: function() {
-        console.log("Main MOUNTED");
-
-		helpers.getArticles().then(function(articles) {
-			console.log("initial state", articles);
-			this.setState({articles: articles});
-		}.bind(this));
-
+        // Get the latest history.
+        helpers.getHistory().then(function(response) {
+            console.log(response);
+            if (response !== this.state.history) {
+                console.log("History", response.data);
+                this.setState({history: response.data});
+            }
+        }.bind(this));
     },
 
-    // will run every time the component updates it's props or state
-    componentDidUpdate: function(prevProps, prevState) {
-        // If we have a new search term, run a new search
-        if (prevState.articles !== this.state.articles) {
-            console.log("UPDATED");
-        }
-    },
-
-    // Here we describe this component's render method
+    // Here we render the function
     render: function() {
         return (
+
             <div>
-                <ArticleView array={this.state.array}/>
+                <div>
+                    <Nav/>
+                </div>
+
+                <div>
+                    <div>
+                        <Header/>
+                    </div>
+                    <div className="container">
+                        <History history={this.state.history}/>
+                    </div>
+                </div>
+
             </div>
         );
     }

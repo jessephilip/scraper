@@ -1,9 +1,9 @@
 // export html routes
 module.exports = (app) => {
 
-	// function to perform on home page hit
-	app.get("/", (req, res) => {
-		res.sendFile("index.html");
+	// Main "/" Route. This will redirect the user to our rendered React application
+	app.get("/", function(req, res) {
+	  res.sendFile(__dirname + "/public/index.html");
 	});
 
 	// function to perform on /scrape

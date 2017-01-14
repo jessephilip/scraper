@@ -1,45 +1,48 @@
-// import and set up express
-const express = require ("express");
-const app = express();
+// Include Server Dependencies
+var express = require("express");
+var bodyParser = require("body-parser");
+var logger = require("morgan");
+var mongoose = require("mongoose");
 
-// import and set up morgan
-const logger = require ("morgan");
+// Create Instance of Express
+var app = express();
+
+// Sets an initial port. We'll use this later in our listener
+var PORT = process.env.PORT || 3000;
+
+// Run Morgan for Logging
 app.use(logger("dev"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text());
+app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
-// import body-parser
-const bodyParser = require ("body-parser");
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
-
-// offer up static files
+// serve static files
 app.use(express.static("./public"));
 
-// import and set up mongoose
-const mongoose = require ("mongoose");
+// -------------------------------------------------
 
-// Database configuration with mongoose
-mongoose.connect("mongodb://heroku_m21v0lfj:dlfm99aqn2s8utm9clhdjc989h@ds055584.mlab.com:55584/heroku_m21v0lfj");
-const db = mongoose.connection;
+// MongoDB Configuration configuration
+mongoose.connect("mongodb://localhost/smashmagazine");
+var db = mongoose.connection;
 
-// Show any mongoose errors
-db.on("error", (error) => {
-    console.log("Mongoose Error: ", error);
+db.on("error", function(err) {
+  console.log("Mongoose Error: ", err);
 });
 
-// Log into the db through mongoose, log a success message
-db.once("open", () => {
-    console.log("Mongoose connection successful.");
+db.once("open", function() {
+  console.log("Mongoose connection successful.");
 });
 
-// import routes
-require ("./controller/routing/api-routes.js")(app);
+// -------------------------------------------------
+
+// Routes
 require ("./controller/routing/html-routes.js")(app);
+require ("./controller/routing/api-routes.js")(app);
 
-// set up constiable for server port
-const PORT = process.env.PORT || 3000;
+// -------------------------------------------------
 
-// run server
-app.listen(PORT, () => {
-	console.log("Scraper up and listening on " + PORT);
+// Listener
+app.listen(PORT, function() {
+  console.log("Smashmagazine Scraper listening on PORT: " + PORT);
 });

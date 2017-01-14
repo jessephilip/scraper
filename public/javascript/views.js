@@ -1,6 +1,6 @@
 function getArticles() {
-	$.get("/articles", function(result) {
-		console.log(result);
+	$.post("/retrieve", function(result) {
+		console.log("Articles retrieved from Smashmagazine: ", result);
 		// sweetAlert("Oops...", "Something went wrong!", "error");
 	});
 }
