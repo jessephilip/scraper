@@ -22,7 +22,10 @@ const scrape = function(callback) {
             //console.log("savedScrape", element);
 
             // save the title of the article. the article is the textnode on the <h> elements
-            let title = $(element).find("a").text();
+            let title = $(element).find("a").attr("title");
+			let pos = title.indexOf("'");
+			console.log(pos);
+			title = title.substr(pos);
             let link = $(element).find("a").attr("href");
             console.log(index, title, link);
 

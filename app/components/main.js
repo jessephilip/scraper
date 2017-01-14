@@ -4,7 +4,7 @@ var React = require("react");
 // Here we include all of the sub-components
 var Header = require("./children/Header.js");
 var Nav = require("./children/Nav.js");
-var History = require("./children/History");
+var Articles = require("./children/Articles.js");
 
 // Helper for making AJAX requests to our API
 var helpers = require("./utils/helpers");
@@ -15,17 +15,17 @@ var Main = React.createClass({
     // Here we set a generic state associated with the number of clicks
     // Note how we added in this history state variable
     getInitialState: function() {
-        return {history: []};
+        return {articles: []};
     },
 
     // The moment the page renders get the History
     componentDidMount: function() {
         // Get the latest history.
-        helpers.getHistory().then(function(response) {
+        helpers.getArticles().then(function(response) {
             console.log(response);
             if (response !== this.state.history) {
-                console.log("History", response.data);
-                this.setState({history: response.data});
+                console.log("Articles", response.data);
+                this.setState({articles: response.data});
             }
         }.bind(this));
     },
@@ -44,7 +44,7 @@ var Main = React.createClass({
                         <Header/>
                     </div>
                     <div className="container">
-                        <History history={this.state.history}/>
+                        <Articles articles={this.state.articles}/>
                     </div>
                 </div>
 

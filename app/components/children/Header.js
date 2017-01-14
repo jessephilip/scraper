@@ -10,7 +10,7 @@ var Header = React.createClass({
 		<main>
 	  		<div className="title">
 	  			<h1>SmashingMagazine Scraper</h1>
-	  			<p>
+	  			<p className="text-center">
 	  				Bringing you the latest from smashingmagazine.com
 	  			</p>
 	  		</div>

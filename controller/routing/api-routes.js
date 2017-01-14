@@ -23,7 +23,7 @@ module.exports = (app) => {
     });
 
     app.post("/retrieve", (req, res) => {
-        console.log("Retrieving articles from Smashmagazine.");
+        console.log("Retrieving articles from smashmagazine.");
         Scraper(function(data) {
 			console.log(data);
         });
